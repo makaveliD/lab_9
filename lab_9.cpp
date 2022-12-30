@@ -4,29 +4,57 @@
 
 using namespace std;
 
-void main()
-{
-	string sentance;
-	string delimiter = " ";
-	string token;
-	vector<string> sentanceParts;
-	int length;
+vector<string> splitByDelimeter(string str, string delimeter) {
+	
+	vector<string> results;
 	int position;
-	cout << "Enter string: "<<endl;
-	getline(cin, sentance);
-	
-	cout << endl << "Enter length: "<<endl;
-	cin >> length;
-	cout << sentance << ":" << length;
-	position = sentance.find(delimiter);
+	string token;
+	position = str.find(delimeter);
+
 	while (position > 0) {
-		token = sentance.substr(0, position);
-		sentanceParts.push_back(token);
-		sentance.erase(0, position + delimiter.length());
-		position = sentance.find(delimiter);
+		token = str.substr(0, position);
+		results.push_back(token);
+		str.erase(0, position + delimeter.length());
+		position = str.find(delimeter);
 	}
-	for (int i = 0; i < sentanceParts.size(); i++) {
-		cout << sentanceParts[i] << endl;
+	return results;
+}
+
+string removeShorterWords(vector<string> words, int length) {
+	string result;
+	string word;
+
+	for (int i = 0; i < words.size(); i++) {
+		word = words[i];
+		if (word.size() > length)
+		{
+			result += words[i];
+			if (i != words.size()-1)
+			{
+				result += " ";
+			}
+		}
 	}
-	
+	return result;
+}
+
+int main(){
+
+	string sentance;
+	string delimeter = " ";
+	string result;
+	vector<string> sentanceParts;
+	int length = 0;
+
+	cout << "Enter string: " << endl;
+	getline(cin, sentance);
+	cout << endl << "Enter length: " << endl;
+	cin >> length;
+
+	sentanceParts =	splitByDelimeter(sentance, delimeter);
+	result = removeShorterWords(sentanceParts, length);
+
+	cout << result << endl;
+
+	return 0;
 }
